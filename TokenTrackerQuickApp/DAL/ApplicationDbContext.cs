@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using DAL.Models.Interfaces;
+using DAL.DefinitionsImported;
 
 namespace DAL
 {
@@ -21,10 +22,19 @@ namespace DAL
         public string CurrentUserId { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<DAL.Models.Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
+        //************************************
+        public virtual DbSet<Group> Group { get; set; }
+        public virtual DbSet<GroupDetail> GroupDetail { get; set; }
+        public virtual DbSet<PointTransaction> PointTransaction { get; set; }
+        public virtual DbSet<DAL.DefinitionsImported.Product> Product { get; set; }
+        public virtual DbSet<ProductGroup> ProductGroup { get; set; }
+        public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        //***************************************************
 
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
@@ -53,14 +63,14 @@ namespace DAL
             builder.Entity<ProductCategory>().Property(p => p.Description).HasMaxLength(500);
             builder.Entity<ProductCategory>().ToTable($"App{nameof(this.ProductCategories)}");
 
-            builder.Entity<Product>().Property(p => p.Name).IsRequired().HasMaxLength(100);
-            builder.Entity<Product>().HasIndex(p => p.Name);
-            builder.Entity<Product>().Property(p => p.Description).HasMaxLength(500);
-            builder.Entity<Product>().Property(p => p.Icon).IsUnicode(false).HasMaxLength(256);
-            builder.Entity<Product>().HasOne(p => p.Parent).WithMany(p => p.Children).OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<Product>().ToTable($"App{nameof(this.Products)}");
-            builder.Entity<Product>().Property(p => p.BuyingPrice).HasColumnType(priceDecimalType);
-            builder.Entity<Product>().Property(p => p.SellingPrice).HasColumnType(priceDecimalType);
+            builder.Entity<DAL.Models.Product>().Property(p => p.Name).IsRequired().HasMaxLength(100);
+            builder.Entity<DAL.Models.Product>().HasIndex(p => p.Name);
+            builder.Entity<DAL.Models.Product>().Property(p => p.Description).HasMaxLength(500);
+            builder.Entity<DAL.Models.Product>().Property(p => p.Icon).IsUnicode(false).HasMaxLength(256);
+            builder.Entity<DAL.Models.Product>().HasOne(p => p.Parent).WithMany(p => p.Children).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<DAL.Models.Product>().ToTable($"App{nameof(this.Products)}");
+            builder.Entity<DAL.Models.Product>().Property(p => p.BuyingPrice).HasColumnType(priceDecimalType);
+            builder.Entity<DAL.Models.Product>().Property(p => p.SellingPrice).HasColumnType(priceDecimalType);
 
             builder.Entity<Order>().Property(o => o.Comments).HasMaxLength(500);
             builder.Entity<Order>().ToTable($"App{nameof(this.Orders)}");
@@ -69,6 +79,143 @@ namespace DAL
             builder.Entity<OrderDetail>().ToTable($"App{nameof(this.OrderDetails)}");
             builder.Entity<OrderDetail>().Property(p => p.UnitPrice).HasColumnType(priceDecimalType);
             builder.Entity<OrderDetail>().Property(p => p.Discount).HasColumnType(priceDecimalType);
+
+            //**********************************
+            builder.Entity<Group>(entity =>
+            {
+                entity.HasIndex(e => e.Name)
+                    .IsUnique();
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+            });
+
+            builder.Entity<GroupDetail>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Group)
+                    .WithMany(p => p.GroupDetail)
+                    .HasForeignKey(d => d.GroupId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_GroupDetail_Group");
+            });
+
+            builder.Entity<PointTransaction>(entity =>
+            {
+                entity.HasIndex(e => e.ProductId);
+
+                entity.HasIndex(e => e.TransactionDate);
+
+                entity.Property(e => e.AwardMessage)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TransactionDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.PointTransaction)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PointTransaction_Product");
+            });
+
+            builder.Entity<DAL.DefinitionsImported.Product>(entity =>
+            {
+                entity.HasIndex(e => e.Name)
+                    .IsUnique();
+
+                entity.HasIndex(e => e.ProductGroupId);
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.ProductGroup)
+                    .WithMany(p => p.Product)
+                    .HasForeignKey(d => d.ProductGroupId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Product_ProductGroup");
+            });
+
+            builder.Entity<ProductGroup>(entity =>
+            {
+                entity.HasIndex(e => e.Name)
+                    .IsUnique();
+
+                entity.Property(e => e.AffectOnTransaction).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            builder.Entity<Role>(entity =>
+            {
+                entity.HasIndex(e => e.Name)
+                    .HasName("IX_Role")
+                    .IsUnique();
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+            });
+
+            builder.Entity<User>(entity =>
+            {
+                entity.HasIndex(e => e.Email)
+                    .IsUnique();
+
+                entity.HasIndex(e => e.GroupId);
+
+                entity.HasIndex(e => e.RoleId);
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Group)
+                    .WithMany(p => p.User)
+                    .HasForeignKey(d => d.GroupId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_User_Group");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.User)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_User_Role");
+            });
+            //**********************************
         }
 
 

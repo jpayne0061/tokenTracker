@@ -57,6 +57,18 @@
     <None Remove="Logs\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\models\customer.ts" />
+    <None Remove="ClientApp\src\app\models\product.ts" />
+    <None Remove="ClientApp\src\app\models\transaction.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\models\customer.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\product.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\transaction.ts" />
+  </ItemGroup>
+
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">

@@ -17,6 +17,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { Utilities } from './services/utilities';
+import { TransactionsComponent } from './transactions/transactions.component';
 
 
 
@@ -50,7 +51,8 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard], data: { title: 'Settings' } },
   { path: 'about', component: AboutComponent, data: { title: 'About Us' } },
   { path: 'home', redirectTo: '/', pathMatch: 'full' },
-  { path: '**', component: NotFoundComponent, data: { title: 'Page Not Found' } }
+  { path: 'transactions', component: TransactionsComponent, data: { title: 'Transactions' } },
+  { path: '**', component: NotFoundComponent, data: { title: 'Page Not Found' } },
 ];
 
 
