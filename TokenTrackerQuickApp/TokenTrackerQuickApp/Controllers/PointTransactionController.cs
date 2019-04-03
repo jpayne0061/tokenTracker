@@ -24,9 +24,9 @@ namespace TokenTrackerQuickApp.Controllers
         private IUnitOfWork _unitOfWork;
         readonly ILogger _logger;
         readonly IEmailSender _emailSender;
-        DbContext _context;
+        ApplicationDbContext _context;
 
-        public PointTransactionController(IUnitOfWork unitOfWork, ILogger<PointTransactionController> logger, IEmailSender emailSender, DbContext context)
+        public PointTransactionController(IUnitOfWork unitOfWork, ILogger<PointTransactionController> logger, IEmailSender emailSender, ApplicationDbContext context)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
