@@ -17,29 +17,38 @@ export class TransactionsComponent implements OnInit {
 
   public transactions: Transaction[];
   public users: User[];
+  public tableReady: boolean = false;
 
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit() {
     this.getTransactions().subscribe(x => {
       this.transactions = x;
-
-      console.log("transactions: ", x);
-
-      this.getAllUsers().subscribe(x => {
-        console.log("all users from TRX: ", x);
-        this.users = x;
-
-        for (var i = 0; i < this.transactions.length; i++) {
-          let fromUserName: string = this.users.filter(u => u.userId == this.transactions[i].AwardFromId)[0].fullName;
-          let toUserName: string = this.users.filter(u => u.userId == this.transactions[i].AwardToId)[0].fullName;
-
-          this.transactions[i].AwardFromName = fromUserName;
-          this.transactions[i].AwardToName = toUserName;
-        }
-      });
-
+      console.log("all transactions from TRX: ", x);
+      this.checkin();
     });
+
+    this.getAllUsers().subscribe(x => {
+      console.log("all users from TRX: ", x);
+      this.users = x;
+      this.checkin();
+    });
+  }
+
+  checkin() {
+    if (this.transactions && this.users) {
+      for (var i = 0; i < this.transactions.length; i++) {
+        let fromUserName: string = this.users.filter(u => u.userId == this.transactions[i].awardFromId)[0].fullName;
+        let toUserName: string = this.users.filter(u => u.userId == this.transactions[i].awardToId)[0].fullName;
+
+        console.log("fromUserName: ", fromUserName);
+        console.log("toUserName: ", toUserName);
+
+        this.transactions[i].awardFromName = fromUserName;
+        this.transactions[i].awardToName = toUserName;
+        this.tableReady = true;
+      }
+    }
   }
 
   getTransactions(): Observable<Transaction[]> {

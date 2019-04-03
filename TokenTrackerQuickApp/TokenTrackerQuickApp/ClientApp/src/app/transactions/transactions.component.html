@@ -1,21 +1,21 @@
-<h2>Transactions History</h2>
+<h2 style="padding: 20px 0px;">Transactions History</h2>
 
 
-<table>
+<table class="table" *ngIf="tableReady">
   <thead>
-    <th>TransactionDate</th>
-    <th>Points</th>
-    <th>AwardToId</th>
-    <th>AwardFromId</th>
-    <th>AwardMessage</th>
+    <th scope="col">TransactionDate</th>
+    <th scope="col">Points</th>
+    <th scope="col">AwardToId</th>
+    <th scope="col">AwardFromId</th>
+    <th scope="col">AwardMessage</th>
   </thead>
   <tbody>
     <tr *ngFor="let t of transactions">
-      <td>{{t.TransactionDate}}</td>
-      <td>{{t.Points}}</td>
-      <td>{{t.AwardToId}}</td>
-      <td>{{t.AwardFromId}}</td>
-      <td>{{t.AwardMessage}}</td>
+      <td scope="row">{{t.transactionDate}}</td>
+      <td scope="row">{{t.points}}</td>
+      <td scope="row">{{t.awardToName}}</td>
+      <td scope="row">{{t.awardFromName}}</td>
+      <td scope="row">{{t.awardMessage}}</td>
     </tr>
   </tbody>
 </table>

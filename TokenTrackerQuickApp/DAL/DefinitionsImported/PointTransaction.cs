@@ -7,7 +7,6 @@ namespace DAL.DefinitionsImported
     {
         public int PointTransactionId { get; set; }
         public DateTime TransactionDate { get; set; }
-        public int ProductId { get; set; }
         public int Points { get; set; }
         public int? AwardToId { get; set; }
         public int? AwardFromId { get; set; }

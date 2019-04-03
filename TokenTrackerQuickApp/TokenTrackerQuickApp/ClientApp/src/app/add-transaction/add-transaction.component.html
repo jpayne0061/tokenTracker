@@ -2,15 +2,15 @@
 
 <hr>
 <div class="container bootstrap snippet">
-  <div class="row">
-    <div class="col-sm-10"><h1 style="margin-left: 4%;">User name</h1></div>
+  <div class="row" *ngIf="currentUser">
+    <div class="col-sm-10"><h1 style="margin-left: 4%;">{{currentUser.fullName}}</h1></div>
   </div>
   <div class="row">
     <div class="col-sm-3">
       <!--left col-->
 
-      <div class="text-center">
-        <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+      <div class="text-center" *ngIf="currentUser">
+        <img [src]="currentUser.testProperty" class="avatar img-circle img-thumbnail" alt="avatar">
       </div><hr><br>
 
     </div><!--/col-3-->

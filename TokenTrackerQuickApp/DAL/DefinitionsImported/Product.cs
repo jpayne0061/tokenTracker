@@ -7,7 +7,6 @@ namespace DAL.DefinitionsImported
     {
         public Product()
         {
-            PointTransaction = new HashSet<PointTransaction>();
         }
 
         public int ProductId { get; set; }
@@ -17,6 +16,6 @@ namespace DAL.DefinitionsImported
         public int ProductGroupId { get; set; }
 
         public virtual ProductGroup ProductGroup { get; set; }
-        public virtual ICollection<PointTransaction> PointTransaction { get; set; }
+
     }
 }

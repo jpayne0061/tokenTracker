@@ -1,14 +1,13 @@
 import { Product } from "./product";
 
 export class Transaction {
-  public PointTransactionId: number;
-  public TransactionDate: Date;
-  public ProductId: number;
-  public Points: number;
-  public AwardToId: number;
-  public AwardFromId: number;
-  public AwardMessage: string;
-  public AwardToName: string;
-  public AwardFromName: string;
-  public Product: Product;
+  public pointTransactionId: number;
+  public transactionDate: Date;
+  public productId: number;
+  public points: number;
+  public awardToId: number;
+  public awardFromId: number;
+  public awardMessage: string;
+  public awardToName: string = "";
+  public awardFromName: string = "";
 }

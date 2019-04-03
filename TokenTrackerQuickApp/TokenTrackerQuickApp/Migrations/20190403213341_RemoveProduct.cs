@@ -18,9 +18,9 @@ namespace TokenTrackerQuickApp.Migrations
             //    name: "IX_AspNetUsers_GroupId",
             //    table: "AspNetUsers");
 
-            migrationBuilder.DropColumn(
-                name: "GroupId",
-                table: "AspNetUsers");
+            //migrationBuilder.DropColumn(
+            //    name: "GroupId",
+            //    table: "AspNetUsers");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_PointTransaction_Product_ProductId",

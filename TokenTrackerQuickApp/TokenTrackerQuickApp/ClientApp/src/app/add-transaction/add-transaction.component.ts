@@ -62,10 +62,10 @@ export class AddTransactionComponent implements OnInit {
 
   submit() {
     let t: Transaction = new Transaction();
-    t.AwardFromId = this.currentUser.userId;
-    t.AwardMessage = this.awardReason ? this.awardReason : "";
-    t.AwardToId = this.awardToUser;
-    t.Points = this.tokenAwardAmount;
+    t.awardFromId = this.currentUser.userId;
+    t.awardMessage = this.awardReason ? this.awardReason : "";
+    t.awardToId = this.awardToUser;
+    t.points = this.tokenAwardAmount;
 
     this.postTransaction(t).subscribe(x => {
       console.log("result from transaction: ", x);

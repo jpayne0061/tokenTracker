@@ -5,5 +5,5 @@ export class User {
   public totalTokensAwarded: number;
   public awardsBankBalance: number;
   public giveBankBalance: number;
-
+  public testProperty: string;
 }
