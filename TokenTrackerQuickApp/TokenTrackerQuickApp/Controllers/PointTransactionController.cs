@@ -21,6 +21,7 @@ namespace TokenTrackerQuickApp.Controllers
     [Route("api/[controller]")]
     public class PointTransactionController : Controller
     {
+        // test coment
         private IUnitOfWork _unitOfWork;
         readonly ILogger _logger;
         readonly IEmailSender _emailSender;
