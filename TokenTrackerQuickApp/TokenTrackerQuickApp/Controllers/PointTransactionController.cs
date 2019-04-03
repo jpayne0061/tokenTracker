@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using TokenTrackerQuickApp.Helpers;
 using DAL.DefinitionsImported;
 using Microsoft.EntityFrameworkCore;
+using DAL.Models;
 
 namespace TokenTrackerQuickApp.Controllers
 {
@@ -25,13 +26,15 @@ namespace TokenTrackerQuickApp.Controllers
         readonly ILogger _logger;
         readonly IEmailSender _emailSender;
         ApplicationDbContext _context;
+        AccountController _acctController;
 
-        public PointTransactionController(IUnitOfWork unitOfWork, ILogger<PointTransactionController> logger, IEmailSender emailSender, ApplicationDbContext context)
+        public PointTransactionController(IUnitOfWork unitOfWork, ILogger<PointTransactionController> logger, IEmailSender emailSender, ApplicationDbContext context, AccountController acctController)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _emailSender = emailSender;
             _context = context;
+            _acctController = acctController;
         }
 
 
@@ -85,8 +88,26 @@ namespace TokenTrackerQuickApp.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody] PointTransaction transaction)
         {
+            transaction.TransactionDate = DateTime.Now;
+
+            int pointsToAward = transaction.Points;
+
+            List<ApplicationUser> users = _acctController.GetUsers();
+
+            ApplicationUser receivingUser = users.Where(u => u.UserId == transaction.AwardToId).SingleOrDefault();
+
+            ApplicationUser givingUser = users.Where(u => u.UserId == transaction.AwardFromId).SingleOrDefault();
+
+            receivingUser.TotalTokensAwarded += pointsToAward;
+            receivingUser.AwardsBankBalance += pointsToAward;
+
+            givingUser.GiveBankBalance -= pointsToAward;
+
+            _context.PointTransaction.Add(transaction);
+
+            _context.SaveChanges();
         }
 
 

@@ -8,6 +8,7 @@ export class Transaction {
   public AwardToId: number;
   public AwardFromId: number;
   public AwardMessage: string;
-
+  public AwardToName: string;
+  public AwardFromName: string;
   public Product: Product;
 }

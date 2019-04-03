@@ -19,10 +19,11 @@ using TokenTrackerQuickApp.Helpers;
 using Microsoft.AspNetCore.JsonPatch;
 using DAL.Core;
 using IdentityServer4.AccessTokenValidation;
+using DAL;
 
 namespace TokenTrackerQuickApp.Controllers
 {
-    [Authorize(AuthenticationSchemes = IdentityServerAuthenticationDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = IdentityServerAuthenticationDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     public class AccountController : Controller
     {
@@ -30,19 +31,27 @@ namespace TokenTrackerQuickApp.Controllers
         private readonly IAuthorizationService _authorizationService;
         private const string GetUserByIdActionName = "GetUserById";
         private const string GetRoleByIdActionName = "GetRoleById";
+        ApplicationDbContext _context;
 
-        public AccountController(IAccountManager accountManager, IAuthorizationService authorizationService)
+        public AccountController(IAccountManager accountManager, IAuthorizationService authorizationService, ApplicationDbContext context)
         {
             _accountManager = accountManager;
             _authorizationService = authorizationService;
+            _context = context;
         }
 
 
         [HttpGet("users/me")]
-        [ProducesResponseType(200, Type = typeof(UserViewModel))]
-        public async Task<IActionResult> GetCurrentUser()
+        //[ProducesResponseType(200, Type = typeof(UserViewModel))]
+        public ApplicationUser GetCurrentUser()
         {
-            return await GetUserById(Utilities.GetUserId(this.User));
+            string userId = Utilities.GetUserId(this.User);
+
+            List<ApplicationUser> users = _context.Set<ApplicationUser>().ToList();
+
+            ApplicationUser user = users.Where(u => u.Id == userId).SingleOrDefault();
+
+            return user;
         }
 
 
@@ -84,11 +93,12 @@ namespace TokenTrackerQuickApp.Controllers
 
 
         [HttpGet("users")]
-        [Authorize(Authorization.Policies.ViewAllUsersPolicy)]
+        //[Authorize(Authorization.Policies.ViewAllUsersPolicy)]
         [ProducesResponseType(200, Type = typeof(List<UserViewModel>))]
-        public async Task<IActionResult> GetUsers()
+        public List<ApplicationUser> GetUsers()
         {
-            return await GetUsers(-1, -1);
+            List<ApplicationUser> users = _context.Set<ApplicationUser>().ToList();
+            return users;
         }
 
 

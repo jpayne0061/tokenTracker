@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace TokenTrackerQuickApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190403173340_AddTestProperty")]
+    partial class AddTestProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,8 +246,6 @@ namespace TokenTrackerQuickApp.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<int>("AwardsBankBalance");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -262,7 +262,7 @@ namespace TokenTrackerQuickApp.Migrations
 
                     b.Property<string>("FullName");
 
-                    b.Property<int>("GiveBankBalance");
+                    b.Property<int?>("GroupId");
 
                     b.Property<bool>("IsEnabled");
 
@@ -288,22 +288,18 @@ namespace TokenTrackerQuickApp.Migrations
 
                     b.Property<string>("TestProperty");
 
-                    b.Property<int>("TotalTokensAwarded");
-
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UpdatedBy");
 
                     b.Property<DateTime>("UpdatedDate");
 
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -625,10 +621,10 @@ namespace TokenTrackerQuickApp.Migrations
 
             modelBuilder.Entity("DAL.DefinitionsImported.PointTransaction", b =>
                 {
-                    b.HasOne("DAL.DefinitionsImported.Product")
+                    b.HasOne("DAL.DefinitionsImported.Product", "Product")
                         .WithMany("PointTransaction")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasConstraintName("FK_PointTransaction_Product");
                 });
 
             modelBuilder.Entity("DAL.DefinitionsImported.Product", b =>
@@ -650,6 +646,13 @@ namespace TokenTrackerQuickApp.Migrations
                         .WithMany("User")
                         .HasForeignKey("RoleId")
                         .HasConstraintName("FK_User_Role");
+                });
+
+            modelBuilder.Entity("DAL.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("DAL.DefinitionsImported.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
                 });
 
             modelBuilder.Entity("DAL.Models.Order", b =>

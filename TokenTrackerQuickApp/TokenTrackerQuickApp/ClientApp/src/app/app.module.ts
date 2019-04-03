@@ -63,6 +63,7 @@ import { UsersManagementComponent } from './components/controls/users-management
 import { RolesManagementComponent } from './components/controls/roles-management.component';
 import { RoleEditorComponent } from './components/controls/role-editor.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { AddTransactionComponent } from './add-transaction/add-transaction.component';
 
 
 
@@ -112,7 +113,8 @@ import { TransactionsComponent } from './transactions/transactions.component';
     BootstrapSelectDirective,
     BootstrapDatepickerDirective,
     GroupByPipe,
-    TransactionsComponent
+    TransactionsComponent,
+    AddTransactionComponent
   ],
   providers: [
     { provide: ErrorHandler, useClass: AppErrorHandler },

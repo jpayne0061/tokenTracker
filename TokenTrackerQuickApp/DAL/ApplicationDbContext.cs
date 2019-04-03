@@ -108,7 +108,7 @@ namespace DAL
 
             builder.Entity<PointTransaction>(entity =>
             {
-                entity.HasIndex(e => e.ProductId);
+                //entity.HasIndex(e => e.ProductId);
 
                 entity.HasIndex(e => e.TransactionDate);
 
@@ -120,11 +120,11 @@ namespace DAL
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.PointTransaction)
-                    .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PointTransaction_Product");
+                //entity.HasOne(d => d.Product)
+                //    .WithMany(p => p.PointTransaction)
+                //    .HasForeignKey(d => d.ProductId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_PointTransaction_Product");
             });
 
             builder.Entity<DAL.DefinitionsImported.Product>(entity =>

@@ -13,6 +13,6 @@ namespace DAL.DefinitionsImported
         public int? AwardFromId { get; set; }
         public string AwardMessage { get; set; }
 
-        public virtual Product Product { get; set; }
+        //public virtual Product Product { get; set; }
     }
 }

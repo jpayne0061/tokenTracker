@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-
+using DAL.DefinitionsImported;
 
 namespace TokenTrackerQuickApp.ViewModels
 {
@@ -68,6 +68,14 @@ namespace TokenTrackerQuickApp.ViewModels
         public string Configuration { get; set; }
 
         public bool IsEnabled { get; set; }
+
+        //********
+
+        public int UserId { get; set; }
+
+        public int TotalTokensAwarded { get; set; }
+        public int AwardsBankBalance { get; set; }
+        public int GiveBankBalance { get; set; }
     }
 
 

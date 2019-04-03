@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using DAL.Models.Interfaces;
+using DAL.DefinitionsImported;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
@@ -40,7 +42,14 @@ namespace DAL.Models
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
 
+        public string TestProperty { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int UserId { get; set; }
+
+        public int TotalTokensAwarded { get; set; }
+        public int AwardsBankBalance { get; set; }
+        public int GiveBankBalance { get; set; }
 
         /// <summary>
         /// Navigation property for the roles this user belongs to.

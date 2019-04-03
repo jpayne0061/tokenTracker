@@ -1,3 +1,21 @@
-<p>
-  transactions works!
-</p>
+<h2>Transactions History</h2>
+
+
+<table>
+  <thead>
+    <th>TransactionDate</th>
+    <th>Points</th>
+    <th>AwardToId</th>
+    <th>AwardFromId</th>
+    <th>AwardMessage</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let t of transactions">
+      <td>{{t.TransactionDate}}</td>
+      <td>{{t.Points}}</td>
+      <td>{{t.AwardToId}}</td>
+      <td>{{t.AwardFromId}}</td>
+      <td>{{t.AwardMessage}}</td>
+    </tr>
+  </tbody>
+</table>
