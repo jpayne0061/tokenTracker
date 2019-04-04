@@ -24,21 +24,23 @@
 
               <div class="col-xs-6">
                 <h4 style="display:inline-block">Total Tokens Awarded: </h4>
-                <h4>{{currentUser.totalTokensAwarded}}</h4>
+                <h4 style="display:inline-block; padding-left: 20px">{{currentUser.totalTokensAwarded}}</h4>
               </div>
+              <hr />
             </div>
             <div class="form-group">
 
               <div class="col-xs-6">
                 <h4 style="display:inline-block">Awards Bank Balance: </h4>
-                <h4>{{currentUser.awardsBankBalance}}</h4>
+                <h4 style="display:inline-block; padding-left: 20px">{{currentUser.awardsBankBalance}}</h4>
               </div>
+              <hr />
             </div>
             <div class="form-group">
 
               <div class="col-xs-6">
                 <h4 style="display:inline-block">Giveaway Bank: </h4>
-                <h4>{{currentUser.giveBankBalance}}</h4>
+                <h4 style="display:inline-block; padding-left: 20px">{{currentUser.giveBankBalance}}</h4>
               </div>
             </div>
 
@@ -46,7 +48,7 @@
 
             <div class="form-group" *ngIf="users">
               <h4>Award Tokens</h4>
-              <select [(ngModel)]="awardToUser" [ngModelOptions]="{standalone: true}">
+              <select [(ngModel)]="awardToUser" [ngModelOptions]="{standalone: true}" style="width: 300px; padding: 5px 10px">
                 <option *ngFor="let user of users" [value]="user.userId" >{{user.fullName}}</option>
               </select>
             </div>

@@ -105,6 +105,11 @@ export class AuthService {
       this.logout();
     }
 
+    let url: any = this.endpointFactory.getLoginEndpoint<LoginResponse>(userName, password).subscribe(x => {
+      console.log("login response: ", x);
+    });
+
+
     return this.endpointFactory.getLoginEndpoint<LoginResponse>(userName, password).pipe(
       map(response => this.processLoginResponse(response, rememberMe)));
   }
