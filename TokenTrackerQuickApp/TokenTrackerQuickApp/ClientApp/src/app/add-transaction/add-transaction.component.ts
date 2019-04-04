@@ -53,7 +53,13 @@ export class AddTransactionComponent implements OnInit {
 
     this.getAllUsers().subscribe(x => {
       console.log("all users: ", x);
-      this.users = x;
+      this.users = x.sort(function (a, b) {
+        var x = a.fullName.toLowerCase();
+        var y = b.fullName.toLowerCase();
+        if (x < y) { return -1; }
+        if (x > y) { return 1; }
+        return 0;
+      });
       let user: any = this.acctService.currentUser;
       this.currentUser = this.users.filter(u => u.id == user.id)[0];
     });
@@ -68,7 +74,10 @@ export class AddTransactionComponent implements OnInit {
     t.points = this.tokenAwardAmount;
 
     this.postTransaction(t).subscribe(x => {
+      let user: User = this.users.filter(u => u.userId == t.awardToId)[0];
       console.log("result from transaction: ", x);
+      alert("You've awarded " + t.points + " tokens to " + user.fullName);
+
     });
   }
 

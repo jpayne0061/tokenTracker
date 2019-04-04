@@ -64,6 +64,7 @@ import { RolesManagementComponent } from './components/controls/roles-management
 import { RoleEditorComponent } from './components/controls/role-editor.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { AddTransactionComponent } from './add-transaction/add-transaction.component';
+import { BadgesComponent } from './badges/badges.component';
 
 
 
@@ -114,7 +115,8 @@ import { AddTransactionComponent } from './add-transaction/add-transaction.compo
     BootstrapDatepickerDirective,
     GroupByPipe,
     TransactionsComponent,
-    AddTransactionComponent
+    AddTransactionComponent,
+    BadgesComponent
   ],
   providers: [
     { provide: ErrorHandler, useClass: AppErrorHandler },

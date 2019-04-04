@@ -1,11 +1,11 @@
 <div class="app-component app-container">
   <ngx-toasta></ngx-toasta>
 
-  <nav id="header" class="app-component navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #fe8f1c">
+  <nav id="header" class="app-component navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #000">
     <div class="container">
       <a ngPreserveWhitespaces class="app-component navbar-brand" routerLink="/">
-        <img [src]="appLogo" class="d-inline-block align-top" alt="logo">
-        <span class="app-component appTitle">Beyond Token Tracker</span>
+        <img width="30" style="height: inherit" src="../../assets/beyond_logomark_white.png" class="d-inline-block align-top" alt="logo">
+        <span class="app-component appTitle" style="font-size: 1.75rem; font-weight: 600;vertical-align: -webkit-baseline-middle; padding-right: 40px; color: #fff">Beyond Token Tracker</span>
       </a>
       <button type="button" class="app-component navbar-toggler" data-toggle="collapse" data-target=".menuItemsContainer.app-component">
         <span class="navbar-toggler-icon"></span>
@@ -29,25 +29,31 @@
     <a class="nav-link" routerLink="/about">{{'mainMenu.About' | translate}}</a>
   </li>-->
           <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/badges">My Badges</a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            ut
             <a class="nav-link" routerLink="/products">Redemption</a>
           </li>
           <li class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/transactions">History</a>
           </li>
           <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" routerLink="/add-transaction">Add Transaction</a>
+            <a class="nav-link" routerLink="/add-transaction">Give Tokens</a>
           </li>
 
         </ul>
-        <ul class="app-component nav nav-pills flex-column flex-lg-row mr-md-2">
-          <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" routerLink="/settings"><i class="fa fa-cog"></i></a>
-          </li>
-        </ul>
+        <!--<ul class="app-component nav nav-pills flex-column flex-lg-row mr-md-2">
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="/settings"><i class="fa fa-cog"></i></a>
+    </li>
+  </ul>-->
+        <!--[popover]="popTemplate" (onHidden)="markNotificationsAsRead()" placement="bottom" [popoverTitle]="notificationsTitle" href="javascript:;" triggers="focus"-->
+
         <span class="app-component navbar-text notifications-popup">{{'app.Welcome' | translate}}</span>
-        <a class="app-component nav-link user-name d-inline-block px-1" [popover]="popTemplate" (onHidden)="markNotificationsAsRead()" placement="bottom" [popoverTitle]="notificationsTitle" href="javascript:;" triggers="focus">
+        <a class="app-component nav-link user-name d-inline-block px-1">
           {{userName}}
-          <span *ngIf="newNotificationCount > 0" class="badge badge-pill badge-secondary">{{newNotificationCount}}</span>
+          <!--<span *ngIf="newNotificationCount > 0" class="badge badge-pill badge-secondary">{{newNotificationCount}}</span>-->
         </a>
         <ng-template #popTemplate>
           <notifications-viewer [isViewOnly]="true"></notifications-viewer>

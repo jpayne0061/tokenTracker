@@ -62,6 +62,7 @@
     <None Remove="ClientApp\src\app\models\product.ts" />
     <None Remove="ClientApp\src\app\models\transaction.ts" />
     <None Remove="ClientApp\src\app\models\user.ts" />
+    <None Remove="ClientApp\src\app\services\accountService2.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -69,6 +70,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\models\product.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\transaction.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\accountService2.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

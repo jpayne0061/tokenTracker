@@ -6,4 +6,5 @@ export class User {
   public awardsBankBalance: number;
   public giveBankBalance: number;
   public testProperty: string;
+  public passwordHash: string;
 }

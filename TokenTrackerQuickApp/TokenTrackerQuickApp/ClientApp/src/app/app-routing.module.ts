@@ -19,6 +19,7 @@ import { AuthGuard } from './services/auth-guard.service';
 import { Utilities } from './services/utilities';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { AddTransactionComponent } from './add-transaction/add-transaction.component';
+import { BadgesComponent } from './badges/badges.component';
 
 
 
@@ -53,7 +54,8 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent, data: { title: 'About Us' } },
   { path: 'home', redirectTo: '/', pathMatch: 'full' },
   { path: 'transactions', component: TransactionsComponent, data: { title: 'Transactions' } },
-  { path: 'add-transaction', component: AddTransactionComponent, data: { title: 'Transactions' } },
+  { path: 'add-transaction', component: AddTransactionComponent, data: { title: 'Give Tokens' } },
+  { path: 'badges', component: BadgesComponent, data: { title: 'My Badges' } },
   { path: '**', component: NotFoundComponent, data: { title: 'Page Not Found' } },
 ];
 

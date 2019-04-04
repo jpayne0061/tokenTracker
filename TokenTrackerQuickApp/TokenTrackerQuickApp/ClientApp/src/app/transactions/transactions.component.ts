@@ -46,6 +46,7 @@ export class TransactionsComponent implements OnInit {
 
         this.transactions[i].awardFromName = fromUserName;
         this.transactions[i].awardToName = toUserName;
+
         this.tableReady = true;
       }
     }
